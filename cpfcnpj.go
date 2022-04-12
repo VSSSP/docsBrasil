@@ -106,9 +106,7 @@ func calculateDigit(doc string, position int) string {
 	return strconv.Itoa(11 - sum)
 }
 
-
-
--------------------- 
+// -------------------- 
 
 func validateCPNJ(CNPJ string) bool {
 
