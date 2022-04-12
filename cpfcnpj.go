@@ -105,3 +105,81 @@ func calculateDigit(doc string, position int) string {
 
 	return strconv.Itoa(11 - sum)
 }
+
+
+
+-------------------- 
+
+func validateCPNJ(CNPJ string) bool {
+
+	fmt.Println(CNPJ)
+
+
+	if CNPJ == "" {
+		return false
+	}
+
+	if len(CNPJ) != 14 ||
+	CNPJ == "00000000000000" ||
+	CNPJ == "11111111111111" ||
+	CNPJ == "22222222222222" ||
+	CNPJ == "33333333333333" ||
+	CNPJ == "44444444444444" ||
+	CNPJ == "55555555555555" ||
+	CNPJ == "66666666666666" ||
+	CNPJ == "77777777777777" ||
+	CNPJ == "88888888888888" ||
+	CNPJ == "99999999999999" {
+	return false
+	}
+	return true
+}
+
+// checagem feita apenas pelo checkCNPJ
+
+func stringToIntSliceCNPJ(data string) (res []int) {
+    for _, d := range data {
+        x, err := strconv.Atoi(string(d))
+        if err != nil {
+            continue
+        }
+        res = append(res, x)
+    }
+    return
+}
+
+func verifyCNPJ(data []int, j int, n int) bool{
+        
+    soma := 0        
+
+    for i := 0; i < n; i++ {
+        v := data[i]
+        soma += v * j
+        
+        if j == 2 {
+            j = 9
+        } else {
+            j -= 1
+        }
+    }
+
+    resto := soma % 11
+
+    v := data[n]
+    x := 0
+
+    if resto >= 2 {
+        x = 11 - resto
+    }
+
+    if  v != x {
+        return false
+    }
+
+    return true
+}
+
+func checkCNPJ(data string) bool {
+    return verifyCNPJ(stringToIntSliceCNPJ(data), 5, 12) && verifyCNPJ(stringToIntSliceCNPJ(data), 6, 13)
+}
+
